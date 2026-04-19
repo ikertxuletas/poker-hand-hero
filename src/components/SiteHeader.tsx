@@ -5,6 +5,7 @@ const links = [
   { to: "/learn", label: "Learn" },
   { to: "/quiz", label: "Quiz" },
   { to: "/trainer", label: "Trainer" },
+  { to: "/blackjack", label: "Blackjack" },
 ] as const;
 
 export function SiteHeader() {
