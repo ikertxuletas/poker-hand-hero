@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrainerRouteImport } from './routes/trainer'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as BlackjackRouteImport } from './routes/blackjack'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TrainerRoute = TrainerRouteImport.update({
@@ -29,6 +30,11 @@ const LearnRoute = LearnRouteImport.update({
   path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlackjackRoute = BlackjackRouteImport.update({
+  id: '/blackjack',
+  path: '/blackjack',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blackjack': typeof BlackjackRoute
   '/learn': typeof LearnRoute
   '/quiz': typeof QuizRoute
   '/trainer': typeof TrainerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blackjack': typeof BlackjackRoute
   '/learn': typeof LearnRoute
   '/quiz': typeof QuizRoute
   '/trainer': typeof TrainerRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blackjack': typeof BlackjackRoute
   '/learn': typeof LearnRoute
   '/quiz': typeof QuizRoute
   '/trainer': typeof TrainerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/learn' | '/quiz' | '/trainer'
+  fullPaths: '/' | '/blackjack' | '/learn' | '/quiz' | '/trainer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/learn' | '/quiz' | '/trainer'
-  id: '__root__' | '/' | '/learn' | '/quiz' | '/trainer'
+  to: '/' | '/blackjack' | '/learn' | '/quiz' | '/trainer'
+  id: '__root__' | '/' | '/blackjack' | '/learn' | '/quiz' | '/trainer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlackjackRoute: typeof BlackjackRoute
   LearnRoute: typeof LearnRoute
   QuizRoute: typeof QuizRoute
   TrainerRoute: typeof TrainerRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blackjack': {
+      id: '/blackjack'
+      path: '/blackjack'
+      fullPath: '/blackjack'
+      preLoaderRoute: typeof BlackjackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlackjackRoute: BlackjackRoute,
   LearnRoute: LearnRoute,
   QuizRoute: QuizRoute,
   TrainerRoute: TrainerRoute,
