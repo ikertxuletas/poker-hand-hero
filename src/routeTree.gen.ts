@@ -13,6 +13,7 @@ import { Route as TrainerRouteImport } from './routes/trainer'
 import { Route as RangesRouteImport } from './routes/ranges'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as CoachRouteImport } from './routes/coach'
 import { Route as BlackjackRouteImport } from './routes/blackjack'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const LearnRoute = LearnRouteImport.update({
   path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoachRoute = CoachRouteImport.update({
+  id: '/coach',
+  path: '/coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlackjackRoute = BlackjackRouteImport.update({
   id: '/blackjack',
   path: '/blackjack',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blackjack': typeof BlackjackRoute
+  '/coach': typeof CoachRoute
   '/learn': typeof LearnRoute
   '/quiz': typeof QuizRoute
   '/ranges': typeof RangesRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blackjack': typeof BlackjackRoute
+  '/coach': typeof CoachRoute
   '/learn': typeof LearnRoute
   '/quiz': typeof QuizRoute
   '/ranges': typeof RangesRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blackjack': typeof BlackjackRoute
+  '/coach': typeof CoachRoute
   '/learn': typeof LearnRoute
   '/quiz': typeof QuizRoute
   '/ranges': typeof RangesRoute
@@ -74,13 +83,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blackjack' | '/learn' | '/quiz' | '/ranges' | '/trainer'
+  fullPaths:
+    | '/'
+    | '/blackjack'
+    | '/coach'
+    | '/learn'
+    | '/quiz'
+    | '/ranges'
+    | '/trainer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blackjack' | '/learn' | '/quiz' | '/ranges' | '/trainer'
+  to:
+    | '/'
+    | '/blackjack'
+    | '/coach'
+    | '/learn'
+    | '/quiz'
+    | '/ranges'
+    | '/trainer'
   id:
     | '__root__'
     | '/'
     | '/blackjack'
+    | '/coach'
     | '/learn'
     | '/quiz'
     | '/ranges'
@@ -90,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlackjackRoute: typeof BlackjackRoute
+  CoachRoute: typeof CoachRoute
   LearnRoute: typeof LearnRoute
   QuizRoute: typeof QuizRoute
   RangesRoute: typeof RangesRoute
@@ -126,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coach': {
+      id: '/coach'
+      path: '/coach'
+      fullPath: '/coach'
+      preLoaderRoute: typeof CoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blackjack': {
       id: '/blackjack'
       path: '/blackjack'
@@ -146,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlackjackRoute: BlackjackRoute,
+  CoachRoute: CoachRoute,
   LearnRoute: LearnRoute,
   QuizRoute: QuizRoute,
   RangesRoute: RangesRoute,
