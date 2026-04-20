@@ -20,6 +20,25 @@ export const Route = createFileRoute("/quiz")({
 });
 
 type Difficulty = "Beginner" | "Intermediate" | "Advanced" | "Expert";
+
+const HAND_RARITY: Record<string, number> = {
+  "royal-flush": 0.0002,
+  "straight-flush": 0.0014,
+  "four-of-a-kind": 0.024,
+  "full-house": 0.14,
+  "flush": 0.2,
+  "straight": 0.39,
+  "three-of-a-kind": 2.1,
+  "two-pair": 4.75,
+  "one-pair": 42.3,
+  "high-card": 50.1,
+};
+
+function rarityLabel(category: string): string {
+  const pct = HAND_RARITY[category];
+  if (pct === undefined) return "";
+  return `Top ${pct < 0.01 ? pct.toFixed(4) : pct < 1 ? pct.toFixed(2) : pct.toFixed(1)}% of all hands`;
+}
 const DIFFICULTIES: Difficulty[] = ["Beginner", "Intermediate", "Advanced", "Expert"];
 const TIMER_SECONDS = 20;
 
@@ -250,8 +269,11 @@ function QuizPage() {
                 </div>
                 <CardRow cards={cards} size="sm" className="justify-center mb-4" />
                 {revealed && (
-                  <div className="text-center">
+                  <div className="text-center space-y-2">
                     <div className="font-display text-lg font-bold">{info.name}</div>
+                    <span className="inline-block text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded bg-secondary/60 text-muted-foreground">
+                      {rarityLabel(info.category)}
+                    </span>
                   </div>
                 )}
               </button>
